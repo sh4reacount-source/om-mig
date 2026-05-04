@@ -122,7 +122,7 @@
         max-height: 0;
         padding: 0 1.25rem;
         overflow: hidden;
-        transition: max-height 0.3s ease, padding 0.2s ease;
+        transition: max-height 0.3s ease;
         border-top: 0px solid #1f1f1f;
     }
 
@@ -134,7 +134,6 @@
 
     .song {
         padding: 0.6rem 0;
-        color: #aaa;
         cursor: pointer;
         display: flex;
         justify-content: space-between;
@@ -143,12 +142,21 @@
         transition: 0.15s;
         font-size: 0.9rem;
     }
+    
+    .song a {
+        text-decoration: none;
+        color: #aaa;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        align-items: center;
+    }
 
     .song:last-child {
         border-bottom: none;
     }
 
-    .song:hover {
+    .song:hover a {
         color: white;
         padding-left: 4px;
     }
@@ -194,7 +202,7 @@
         <p>— underground archive —</p>
     </div>
 
-    <!-- consev (SoundCloud) -->
+    <!-- consev -->
     <div class="artist-card" onclick="toggle(this)">
         <div class="artist-header">
             <div class="artist-name">
@@ -206,11 +214,11 @@
             <span class="chevron">▼</span>
         </div>
         <div class="artist-content">
-            <div class="song" onclick="openLink(event, 'https://soundcloud.com/6c0nsev/problem-here')"><span class="song-title">problem</span><span class="song-link-icon">↗</span></div>
-            <div class="song" onclick="openLink(event, 'https://soundcloud.com/6c0nsev/arcangel')"><span class="song-title">arcangel</span><span class="song-link-icon">↗</span></div>
-            <div class="song" onclick="openLink(event, 'https://soundcloud.com/6c0nsev/1mil-scener')"><span class="song-title">1mil scener</span><span class="song-link-icon">↗</span></div>
-            <div class="song" onclick="openLink(event, 'https://soundcloud.com/6c0nsev/leo')"><span class="song-title">leo</span><span class="song-link-icon">↗</span></div>
-            <div class="song" onclick="openLink(event, 'https://soundcloud.com/6c0nsev/wru')"><span class="song-title">where are you.</span><span class="song-link-icon">↗</span></div>
+            <div class="song"><a href="#" target="_blank" onclick="event.stopPropagation()"><span class="song-title">problem</span><span class="song-link-icon">↗</span></a></div>
+            <div class="song"><a href="#" target="_blank" onclick="event.stopPropagation()"><span class="song-title">arcangel</span><span class="song-link-icon">↗</span></a></div>
+            <div class="song"><a href="#" target="_blank" onclick="event.stopPropagation()"><span class="song-title">1mil scener</span><span class="song-link-icon">↗</span></a></div>
+            <div class="song"><a href="#" target="_blank" onclick="event.stopPropagation()"><span class="song-title">leo</span><span class="song-link-icon">↗</span></a></div>
+            <div class="song"><a href="#" target="_blank" onclick="event.stopPropagation()"><span class="song-title">where are you.</span><span class="song-link-icon">↗</span></a></div>
         </div>
     </div>
 
@@ -226,10 +234,10 @@
             <span class="chevron">▼</span>
         </div>
         <div class="artist-content">
-            <div class="song" onclick="openLink(event, 'https://soundcloud.com/yungxware/never-w-consev')"><span class="song-title">never w/ consev</span><span class="song-link-icon">↗</span></div>
-            <div class="song" onclick="openLink(event, 'https://soundcloud.com/yungxware/phineas-ferb-w-sprayr')"><span class="song-title">phineas & ferb w/ sprayr</span><span class="song-link-icon">↗</span></div>
-            <div class="song" onclick="openLink(event, 'https://soundcloud.com/yungxware/dynamit')"><span class="song-title">dynamit</span><span class="song-link-icon">↗</span></div>
-            <div class="song" onclick="openLink(event, 'https://soundcloud.com/yungxware/madonna')"><span class="song-title">madonna</span><span class="song-link-icon">↗</span></div>
+            <div class="song"><a href="#" target="_blank" onclick="event.stopPropagation()"><span class="song-title">never w/ consev</span><span class="song-link-icon">↗</span></a></div>
+            <div class="song"><a href="#" target="_blank" onclick="event.stopPropagation()"><span class="song-title">phineas & ferb w/ sprayr</span><span class="song-link-icon">↗</span></a></div>
+            <div class="song"><a href="#" target="_blank" onclick="event.stopPropagation()"><span class="song-title">dynamit</span><span class="song-link-icon">↗</span></a></div>
+            <div class="song"><a href="#" target="_blank" onclick="event.stopPropagation()"><span class="song-title">madonna</span><span class="song-link-icon">↗</span></a></div>
         </div>
     </div>
 
@@ -243,11 +251,11 @@
             <span class="chevron">▼</span>
         </div>
         <div class="artist-content">
-            <div class="song" onclick="openLink(event, '#')"><span class="song-title">phineas & ferb (feat sprayr)</span><span class="song-link-icon">↗</span></div>
+            <div class="song"><a href="#" target="_blank" onclick="event.stopPropagation()"><span class="song-title">phineas & ferb (feat sprayr)</span><span class="song-link-icon">↗</span></a></div>
         </div>
     </div>
 
-    <!-- mikkelfrankenstein (SoundCloud) -->
+    <!-- mikkelfrankenstein -->
     <div class="artist-card" onclick="toggle(this)">
         <div class="artist-header">
             <div class="artist-name">
@@ -259,7 +267,7 @@
             <span class="chevron">▼</span>
         </div>
         <div class="artist-content">
-            <div class="song" onclick="openLink(event, '#')"><span class="song-title">doi (feat mikkel + acemajor)</span><span class="song-link-icon">↗</span></div>
+            <div class="song"><a href="#" target="_blank" onclick="event.stopPropagation()"><span class="song-title">doi (feat mikkel + acemajor)</span><span class="song-link-icon">↗</span></a></div>
         </div>
     </div>
 
@@ -273,11 +281,11 @@
             <span class="chevron">▼</span>
         </div>
         <div class="artist-content">
-            <div class="song" onclick="openLink(event, '#')"><span class="song-title">doi</span><span class="song-link-icon">↗</span></div>
+            <div class="song"><a href="#" target="_blank" onclick="event.stopPropagation()"><span class="song-title">doi</span><span class="song-link-icon">↗</span></a></div>
         </div>
     </div>
 
-    <!-- 4654 carpet muncher (SoundCloud) -->
+    <!-- 4654 carpet muncher -->
     <div class="artist-card" onclick="toggle(this)">
         <div class="artist-header">
             <div class="artist-name">
@@ -289,11 +297,11 @@
             <span class="chevron">▼</span>
         </div>
         <div class="artist-content">
-            <div class="song" onclick="openLink(event, '#')"><span class="song-title">det ovr</span><span class="song-link-icon">↗</span></div>
+            <div class="song"><a href="#" target="_blank" onclick="event.stopPropagation()"><span class="song-title">det ovr</span><span class="song-link-icon">↗</span></a></div>
         </div>
     </div>
 
-    <!-- kirbs (Spotify) -->
+    <!-- kirbs -->
     <div class="artist-card" onclick="toggle(this)">
         <div class="artist-header">
             <div class="artist-name">
@@ -309,7 +317,7 @@
         </div>
     </div>
 
-    <!-- n4cho (SoundCloud) -->
+    <!-- n4cho -->
     <div class="artist-card" onclick="toggle(this)">
         <div class="artist-header">
             <div class="artist-name">
@@ -330,7 +338,9 @@
         <div class="artist-header">
             <div class="artist-name">
                 kravle
-                <div class="platform-badge"><span style="background:#1a1a1a; padding:3px 8px; border-radius:20px; font-size:0.7rem; color:#555;">🔍 no link yet</span></div>
+                <div class="platform-badge">
+                    <a href="https://soundcloud.com/kravle" target="_blank" onclick="event.stopPropagation()">🎧 SC</a>
+                </div>
             </div>
             <span class="chevron">▼</span>
         </div>
@@ -339,7 +349,7 @@
         </div>
     </div>
 
-    <!-- macs (Spotify) -->
+    <!-- macs -->
     <div class="artist-card" onclick="toggle(this)">
         <div class="artist-header">
             <div class="artist-name">
@@ -363,13 +373,6 @@
 <script>
 function toggle(element) {
     element.classList.toggle("active");
-}
-
-function openLink(event, url) {
-    event.stopPropagation();
-    if (url && url !== "#") {
-        window.open(url, "_blank");
-    }
 }
 </script>
 </body>
