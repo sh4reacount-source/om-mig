@@ -3,180 +3,374 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>consev</title>
+<title>ovr · collective</title>
 
 <style>
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: radial-gradient(circle at top, #1a1a1a, #0a0a0a);
-    color: white;
-    overflow-x: hidden;
-}
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
 
-.topbar {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-}
+    body {
+        background: #0a0a0a;
+        font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
+        color: #e6e6e6;
+        padding: 2rem 1rem;
+    }
 
-.lang-btn {
-    background: #222;
-    border: none;
-    color: white;
-    padding: 8px 12px;
-    margin-left: 5px;
-    border-radius: 6px;
-    cursor: pointer;
-}
+    .container {
+        max-width: 720px;
+        margin: 0 auto;
+    }
 
-.lang-btn:hover {
-    background: #444;
-}
+    .hero {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
 
-.container {
-    max-width: 700px;
-    margin: auto;
-    padding: 80px 20px;
-    text-align: center;
-}
+    .hero h1 {
+        font-size: 3.5rem;
+        font-weight: 600;
+        letter-spacing: -0.5px;
+        background: linear-gradient(135deg, #ffffff, #a0a0a0);
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
 
-h1 {
-    font-size: 42px;
-    margin-bottom: 10px;
-    letter-spacing: 2px;
-}
+    .hero p {
+        color: #777;
+        font-size: 0.9rem;
+        margin-top: 0.5rem;
+        border-top: 1px solid #1f1f1f;
+        display: inline-block;
+        padding-top: 0.6rem;
+    }
 
-.desc {
-    color: #aaa;
-    line-height: 1.6;
-}
+    .artist-card {
+        background: #0f0f0f;
+        border-radius: 1.25rem;
+        margin-bottom: 1rem;
+        transition: all 0.2s ease;
+        border: 1px solid #1c1c1c;
+        overflow: hidden;
+    }
 
-.section {
-    margin-top: 40px;
-}
+    .artist-card:hover {
+        background: #131313;
+        border-color: #2a2a2a;
+    }
 
-.song {
-    background: #111;
-    padding: 15px;
-    margin: 10px 0;
-    border-radius: 10px;
-    transition: 0.2s;
-    cursor: pointer;
-    text-transform: lowercase;
-}
+    .artist-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 1.25rem;
+        cursor: pointer;
+        user-select: none;
+        font-weight: 500;
+        font-size: 1.2rem;
+        letter-spacing: -0.2px;
+    }
 
-.song:hover {
-    transform: scale(1.03);
-    background: #1c1c1c;
-}
+    .artist-name {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
 
-.links {
-    margin-top: 30px;
-}
+    .platform-badge {
+        display: inline-flex;
+        gap: 8px;
+        margin-left: 8px;
+        font-size: 0.7rem;
+        font-weight: normal;
+    }
 
-.link-btn {
-    display: block;
-    text-decoration: none;
-    color: white;
-    padding: 14px;
-    margin: 10px 0;
-    border-radius: 10px;
-    font-weight: bold;
-    transition: 0.2s;
-    text-transform: lowercase;
-}
+    .platform-badge a {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        background: #1a1a1a;
+        padding: 3px 8px;
+        border-radius: 20px;
+        text-decoration: none;
+        font-size: 0.7rem;
+        color: #aaa;
+        transition: 0.2s;
+    }
 
-.spotify { background: #1db954; }
-.soundcloud { background: #ff5500; }
+    .platform-badge a:hover {
+        background: #2a2a2a;
+        color: white;
+    }
 
-.link-btn:hover {
-    opacity: 0.85;
-    transform: scale(1.05);
-}
+    .chevron {
+        transition: transform 0.2s;
+        font-size: 1rem;
+        color: #666;
+    }
 
-.glow {
-    position: fixed;
-    width: 400px;
-    height: 400px;
-    background: radial-gradient(circle, #1db95433, transparent);
-    top: 20%;
-    left: 10%;
-    filter: blur(80px);
-    animation: move 10s infinite alternate;
-}
+    .artist-card.active .chevron {
+        transform: rotate(180deg);
+    }
 
-@keyframes move {
-    from { transform: translate(0,0); }
-    to { transform: translate(100px, 50px); }
-}
+    .artist-content {
+        max-height: 0;
+        padding: 0 1.25rem;
+        overflow: hidden;
+        transition: max-height 0.3s ease, padding 0.2s ease;
+        border-top: 0px solid #1f1f1f;
+    }
+
+    .artist-card.active .artist-content {
+        max-height: 400px;
+        padding: 0 1.25rem 1rem 1.25rem;
+        border-top: 1px solid #1f1f1f;
+    }
+
+    .song {
+        padding: 0.6rem 0;
+        color: #aaa;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #161616;
+        transition: 0.15s;
+        font-size: 0.9rem;
+    }
+
+    .song:last-child {
+        border-bottom: none;
+    }
+
+    .song:hover {
+        color: white;
+        padding-left: 4px;
+    }
+
+    .song-title {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .song-link-icon {
+        font-size: 0.7rem;
+        opacity: 0;
+        transition: 0.15s;
+    }
+
+    .song:hover .song-link-icon {
+        opacity: 0.7;
+    }
+
+    .no-tracks {
+        color: #444;
+        font-style: italic;
+        padding: 0.6rem 0;
+        font-size: 0.85rem;
+    }
+
+    .footer-note {
+        margin-top: 2.5rem;
+        text-align: center;
+        font-size: 0.7rem;
+        color: #333;
+        border-top: 1px solid #111;
+        padding-top: 1.5rem;
+    }
 </style>
 </head>
-
 <body>
 
-<div class="glow"></div>
-
-<div class="topbar">
-    <button class="lang-btn" onclick="setLang('en')">en</button>
-    <button class="lang-btn" onclick="setLang('dk')">dk</button>
-</div>
-
 <div class="container">
+    <div class="hero">
+        <h1>ovr</h1>
+        <p>— underground archive —</p>
+    </div>
 
-<h1>consev</h1>
+    <!-- consev (SoundCloud) -->
+    <div class="artist-card" onclick="toggle(this)">
+        <div class="artist-header">
+            <div class="artist-name">
+                consev
+                <div class="platform-badge">
+                    <a href="https://soundcloud.com/6c0nsev" target="_blank" onclick="event.stopPropagation()">🎧 SC</a>
+                </div>
+            </div>
+            <span class="chevron">▼</span>
+        </div>
+        <div class="artist-content">
+            <div class="song" onclick="openLink(event, 'https://soundcloud.com/6c0nsev/problem-here')"><span class="song-title">problem</span><span class="song-link-icon">↗</span></div>
+            <div class="song" onclick="openLink(event, 'https://soundcloud.com/6c0nsev/arcangel')"><span class="song-title">arcangel</span><span class="song-link-icon">↗</span></div>
+            <div class="song" onclick="openLink(event, 'https://soundcloud.com/6c0nsev/1mil-scener')"><span class="song-title">1mil scener</span><span class="song-link-icon">↗</span></div>
+            <div class="song" onclick="openLink(event, 'https://soundcloud.com/6c0nsev/leo')"><span class="song-title">leo</span><span class="song-link-icon">↗</span></div>
+            <div class="song" onclick="openLink(event, 'https://soundcloud.com/6c0nsev/wru')"><span class="song-title">where are you.</span><span class="song-link-icon">↗</span></div>
+        </div>
+    </div>
 
-<p class="desc" id="desc">
-i make music. mostly just testing sounds, building stuff, seeing what hits.
-nothing too clean, just whatever feels right.
-</p>
+    <!-- yungxware -->
+    <div class="artist-card" onclick="toggle(this)">
+        <div class="artist-header">
+            <div class="artist-name">
+                yungxware
+                <div class="platform-badge">
+                    <a href="https://soundcloud.com/yungxware" target="_blank" onclick="event.stopPropagation()">🎧 SC</a>
+                </div>
+            </div>
+            <span class="chevron">▼</span>
+        </div>
+        <div class="artist-content">
+            <div class="song" onclick="openLink(event, 'https://soundcloud.com/yungxware/never-w-consev')"><span class="song-title">never w/ consev</span><span class="song-link-icon">↗</span></div>
+            <div class="song" onclick="openLink(event, 'https://soundcloud.com/yungxware/phineas-ferb-w-sprayr')"><span class="song-title">phineas & ferb w/ sprayr</span><span class="song-link-icon">↗</span></div>
+            <div class="song" onclick="openLink(event, 'https://soundcloud.com/yungxware/dynamit')"><span class="song-title">dynamit</span><span class="song-link-icon">↗</span></div>
+            <div class="song" onclick="openLink(event, 'https://soundcloud.com/yungxware/madonna')"><span class="song-title">madonna</span><span class="song-link-icon">↗</span></div>
+        </div>
+    </div>
 
-<div class="section">
-    <h2 id="songsTitle">tracks</h2>
+    <!-- sprayr -->
+    <div class="artist-card" onclick="toggle(this)">
+        <div class="artist-header">
+            <div class="artist-name">
+                sprayr
+                <div class="platform-badge"><span style="background:#1a1a1a; padding:3px 8px; border-radius:20px; font-size:0.7rem; color:#555;">🔍 no link yet</span></div>
+            </div>
+            <span class="chevron">▼</span>
+        </div>
+        <div class="artist-content">
+            <div class="song" onclick="openLink(event, '#')"><span class="song-title">phineas & ferb (feat sprayr)</span><span class="song-link-icon">↗</span></div>
+        </div>
+    </div>
 
-    <div class="song" onclick="openSpotify()">passede du til mig</div>
-    <div class="song" onclick="openSpotify()">problem</div>
-    <div class="song" onclick="openSpotify()">1mil scener</div>
-    <div class="song" onclick="openSpotify()">smærtstilende (ft. bigmacnus)</div>
-    <div class="song" onclick="openSpotify()">læber</div>
-    <div class="song" onclick="openSpotify()">arcangel</div>
-    <div class="song" onclick="openSpotify()">leo</div>
-    <div class="song" onclick="openSpotify()">where are you.</div>
-</div>
+    <!-- mikkelfrankenstein (SoundCloud) -->
+    <div class="artist-card" onclick="toggle(this)">
+        <div class="artist-header">
+            <div class="artist-name">
+                mikkelfrankenstein
+                <div class="platform-badge">
+                    <a href="https://soundcloud.com/mikkelfrankeinstein" target="_blank" onclick="event.stopPropagation()">🎧 SC</a>
+                </div>
+            </div>
+            <span class="chevron">▼</span>
+        </div>
+        <div class="artist-content">
+            <div class="song" onclick="openLink(event, '#')"><span class="song-title">doi (feat mikkel + acemajor)</span><span class="song-link-icon">↗</span></div>
+        </div>
+    </div>
 
-<div class="links">
-    <a class="link-btn spotify" href="https://open.spotify.com/artist/6fcB7nbhKN38opldb3xq6K?si=q_AmiCcDRkyUKLvzu_pFxw" target="_blank">
-        spotify
-    </a>
+    <!-- acemajor -->
+    <div class="artist-card" onclick="toggle(this)">
+        <div class="artist-header">
+            <div class="artist-name">
+                acemajor
+                <div class="platform-badge"><span style="background:#1a1a1a; padding:3px 8px; border-radius:20px; font-size:0.7rem; color:#555;">🔍 no link yet</span></div>
+            </div>
+            <span class="chevron">▼</span>
+        </div>
+        <div class="artist-content">
+            <div class="song" onclick="openLink(event, '#')"><span class="song-title">doi</span><span class="song-link-icon">↗</span></div>
+        </div>
+    </div>
 
-    <a class="link-btn soundcloud" href="https://soundcloud.com/consev" target="_blank">
-        soundcloud
-    </a>
-</div>
+    <!-- 4654 carpet muncher (SoundCloud) -->
+    <div class="artist-card" onclick="toggle(this)">
+        <div class="artist-header">
+            <div class="artist-name">
+                4654 carpet muncher
+                <div class="platform-badge">
+                    <a href="https://soundcloud.com/4654carpetmuncher" target="_blank" onclick="event.stopPropagation()">🎧 SC</a>
+                </div>
+            </div>
+            <span class="chevron">▼</span>
+        </div>
+        <div class="artist-content">
+            <div class="song" onclick="openLink(event, '#')"><span class="song-title">det ovr</span><span class="song-link-icon">↗</span></div>
+        </div>
+    </div>
 
+    <!-- kirbs (Spotify) -->
+    <div class="artist-card" onclick="toggle(this)">
+        <div class="artist-header">
+            <div class="artist-name">
+                kirbs
+                <div class="platform-badge">
+                    <a href="https://open.spotify.com/artist/7tEpdyKWIaYkz0k7Omh66X" target="_blank" onclick="event.stopPropagation()">🎵 Spotify</a>
+                </div>
+            </div>
+            <span class="chevron">▼</span>
+        </div>
+        <div class="artist-content">
+            <div class="no-tracks">no public tracks yet</div>
+        </div>
+    </div>
+
+    <!-- n4cho (SoundCloud) -->
+    <div class="artist-card" onclick="toggle(this)">
+        <div class="artist-header">
+            <div class="artist-name">
+                n4cho
+                <div class="platform-badge">
+                    <a href="https://soundcloud.com/prod-by-n4cho" target="_blank" onclick="event.stopPropagation()">🎧 SC</a>
+                </div>
+            </div>
+            <span class="chevron">▼</span>
+        </div>
+        <div class="artist-content">
+            <div class="no-tracks">no public tracks yet</div>
+        </div>
+    </div>
+
+    <!-- kravle -->
+    <div class="artist-card" onclick="toggle(this)">
+        <div class="artist-header">
+            <div class="artist-name">
+                kravle
+                <div class="platform-badge"><span style="background:#1a1a1a; padding:3px 8px; border-radius:20px; font-size:0.7rem; color:#555;">🔍 no link yet</span></div>
+            </div>
+            <span class="chevron">▼</span>
+        </div>
+        <div class="artist-content">
+            <div class="no-tracks">no public tracks yet</div>
+        </div>
+    </div>
+
+    <!-- macs (Spotify) -->
+    <div class="artist-card" onclick="toggle(this)">
+        <div class="artist-header">
+            <div class="artist-name">
+                macs
+                <div class="platform-badge">
+                    <a href="https://open.spotify.com/artist/2GzSzzmJQjPbZlrj4O1Sqr" target="_blank" onclick="event.stopPropagation()">🎵 Spotify</a>
+                </div>
+            </div>
+            <span class="chevron">▼</span>
+        </div>
+        <div class="artist-content">
+            <div class="no-tracks">no public tracks yet</div>
+        </div>
+    </div>
+
+    <div class="footer-note">
+        ⚡ click artist name to expand — platform icons open their profile
+    </div>
 </div>
 
 <script>
-const content = {
-    en: {
-        desc: "i make music. mostly just testing sounds, building stuff, seeing what hits. nothing too clean, just whatever feels right.",
-        songsTitle: "tracks"
-    },
-    dk: {
-        desc: "jeg laver musik. mest bare tester lyde, bygger ting og ser hvad der virker. ikke noget fancy, bare hvad der føles rigtigt.",
-        songsTitle: "tracks"
-    }
-};
-
-function setLang(lang) {
-    document.getElementById("desc").innerText = content[lang].desc;
-    document.getElementById("songsTitle").innerText = content[lang].songsTitle;
+function toggle(element) {
+    element.classList.toggle("active");
 }
 
-function openSpotify() {
-    window.open("https://open.spotify.com/artist/6fcB7nbhKN38opldb3xq6K?si=q_AmiCcDRkyUKLvzu_pFxw", "_blank");
+function openLink(event, url) {
+    event.stopPropagation();
+    if (url && url !== "#") {
+        window.open(url, "_blank");
+    }
 }
 </script>
-
 </body>
 </html>
